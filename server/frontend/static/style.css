@@ -124,3 +124,14 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+  .content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .left, .right {
+      flex: 1 1 300px;
+      padding: 10px;
+    }
