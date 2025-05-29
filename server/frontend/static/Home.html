@@ -8,6 +8,30 @@
 
 const logout = async (e) => {
 //Include the code for logout here.
+// Build logout URL and Make GET request to logout endpoint
+  let logout_url = window.location.origin+"/djangoapp/logout";
+  const res = await fetch(logout_url, {
+    method: "GET",
+  });
+
+  const json = await res.json();
+  if (json) {
+    // Clear session storage and reload page
+    let username = sessionStorage.getItem('username');
+    sessionStorage.removeItem('username');
+      // Notify user of logout
+  alert("Logging out " + username + "...");
+
+  // Delay to allow the alert to be seen before redirect
+  setTimeout(() => {
+    window.location.href = window.location.origin;
+    window.location.reload();
+  }, 500);  // 0.5 second delay
+ 
+  }
+  else {
+    alert("The user could not be logged out.")
+  }
 };
 
 let checkSession = ()=>{

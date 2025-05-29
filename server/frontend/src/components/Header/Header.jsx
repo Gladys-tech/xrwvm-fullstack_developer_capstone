@@ -14,9 +14,14 @@ const Header = () => {
     if (json) {
       let username = sessionStorage.getItem('username');
       sessionStorage.removeItem('username');
-      window.location.href = window.location.origin;
-      window.location.reload();
-      alert("Logging out "+username+"...")
+       // Notify user of logout
+  alert("Logging out " + username + "...");
+
+  // Delay to allow the alert to be seen before redirect
+  setTimeout(() => {
+    window.location.href = window.location.origin;
+    window.location.reload();
+  }, 500);  // 0.5 second delay
     }
     else {
       alert("The user could not be logged out.")
