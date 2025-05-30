@@ -19,6 +19,7 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 from djangoapp.views import logout_request
+from djangoapp.views import  get_dealerships, get_dealer_details
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,4 +30,9 @@ urlpatterns = [
     path('login/', TemplateView.as_view(template_name="index.html")),
     path('logout/', logout_request),
     path('register/', TemplateView.as_view(template_name="index.html")),
+    path('dealers/', TemplateView.as_view(template_name="index.html")),
+    path('get_dealers/', get_dealerships, name='get_dealers'),
+    # path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
+    path('dealer/<int:dealer_id>', get_dealer_details, name='dealer_details'),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
