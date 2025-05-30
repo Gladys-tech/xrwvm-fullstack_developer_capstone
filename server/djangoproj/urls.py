@@ -32,7 +32,7 @@ urlpatterns = [
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('dealers/', TemplateView.as_view(template_name="index.html")),
     path('get_dealers/', get_dealerships, name='get_dealers'),
-    # path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
-    path('dealer/<int:dealer_id>', get_dealer_details, name='dealer_details'),
+    path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
+    path('postreview/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
