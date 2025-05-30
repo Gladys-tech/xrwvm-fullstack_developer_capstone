@@ -13,7 +13,10 @@ from django.contrib.auth import login, authenticate
 import logging
 import json
 from django.views.decorators.csrf import csrf_exempt
-# from .populate import initiate
+from .populate import initiate
+from .models import CarMake, CarModel
+
+
 
 
 # Get an instance of a logger
@@ -21,7 +24,23 @@ logger = logging.getLogger(__name__)
 
 
 # Create your views here.
-
+# def get_cars(request):
+#     count = CarMake.objects.filter().count()
+#     print(count)
+#     if(count == 0):
+#         initiate() 
+#     car_models = CarModel.objects.select_related('car_make')
+#     cars = []
+#     for car_model in car_models:
+#         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+#     return JsonResponse({"CarModels":cars})
+def get_cars(request):
+    if not CarMake.objects.exists():
+        initiate()
+    car_models = CarModel.objects.select_related('car_make')
+    cars = [{"CarModel": c.name, "CarMake": c.car_make.name} for c in car_models]
+    return JsonResponse({"CarModels": cars}, status=200)
+    
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
