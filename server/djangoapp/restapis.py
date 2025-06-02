@@ -45,4 +45,13 @@ def analyze_review_sentiments(text):
 
 # def post_review(data_dict):
 # Add code for posting review
+def post_review(data_dict):
+    request_url = backend_url + "/api/reviews"  # Assuming a fixed endpoint
+    print(f"POST to {request_url} with data: {data_dict}")
+    try:
+        response = requests.post(request_url, json=data_dict)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"POST request failed: {e}")
 
