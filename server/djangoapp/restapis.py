@@ -1,11 +1,11 @@
-import requests
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', 
+    'backend_url',
     default="http://localhost:3030"
 )
 sentiment_analyzer_url = os.getenv(
@@ -40,7 +40,7 @@ def analyze_review_sentiments(text):
 
 
 def post_review(data_dict):
-    request_url = backend_url + "/api/reviews"  # Adjust endpoint 
+    request_url = backend_url + "/reviews"
     print(f"POST to {request_url} with data: {data_dict}")
     try:
         response = requests.post(request_url, json=data_dict)
