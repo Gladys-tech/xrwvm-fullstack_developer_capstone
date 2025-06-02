@@ -30,12 +30,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'https://gladyskyamba-8000.theiadockernext-0-labs-prod-'
-    'theiak8s-4-tor01.proxy.cognitiveclass.ai/',
+    (
+        'https://gladyskyamba-8000.theiadockernext-0-labs-prod-'
+        'theiak8s-4-tor01.proxy.cognitiveclass.ai/'
+    ),
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://gladyskyamba-8000.theiadockernext-0-labs-prod-'
-    'theiak8s-4-tor01.proxy.cognitiveclass.ai',
+    (
+        'https://gladyskyamba-8000.theiadockernext-0-labs-prod-'
+        'theiak8s-4-tor01.proxy.cognitiveclass.ai'
+    ),
 ]
 
 
@@ -139,7 +143,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(
-    STATIC_ROOT, 
+    STATIC_ROOT,
     'media'
 )
 MEDIA_URL = '/media/'
