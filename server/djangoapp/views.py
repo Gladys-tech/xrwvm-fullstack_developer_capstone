@@ -22,7 +22,7 @@ def get_cars(request):
         initiate()
     car_models = CarModel.objects.select_related('car_make')
     cars = [
-        {"CarModel": c.name, "CarMake": c.car_make.name} 
+        {"CarModel": c.name, "CarMake": c.car_make.name}
         for c in car_models
     ]
     return JsonResponse({"CarModels": cars}, status=200)
@@ -114,12 +114,13 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request):
 # ...
 def add_review(request):
-    if(request.user.is_anonymous == False):
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
-            return JsonResponse({"status":200})
-        except:
-            return JsonResponse({"status":401,"message":"Error in posting review"})
+            post_review(data)
+            return JsonResponse({"status": 200})
+        except Exception as e:
+            logger.error(f"Error posting review: {e}")
+            return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
-        return JsonResponse({"status":403,"message":"Unauthorized"})
+        return JsonResponse({"status": 403, "message": "Unauthorized"})
