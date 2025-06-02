@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
 from .models import CarMake, CarModel
+from django.http import JsonResponse
 from django.contrib.auth import login, authenticate, logout
 
 import logging
@@ -20,9 +21,13 @@ def get_cars(request):
     if not CarMake.objects.exists():
         initiate()
     car_models = CarModel.objects.select_related('car_make')
-    cars = [{"CarModel": c.name, "CarMake": c.car_make.name} for c in car_models]
+    cars = [
+        {"CarModel": c.name, "CarMake": c.car_make.name} 
+        for c in car_models
+    ]
     return JsonResponse({"CarModels": cars}, status=200)
-    
+
+
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
 def login_user(request):
@@ -34,6 +39,7 @@ def login_user(request):
         login(request, user)
         return JsonResponse({"userName": username, "status": "Authenticated"})
     return JsonResponse({"userName": username})
+
 
 # Create a `logout_request` view to handle sign out request
 def logout_request(request):
@@ -53,7 +59,9 @@ def registration(request):
 
     try:
         User.objects.get(username=username)
-        return JsonResponse({"userName": username, "error": "Already Registered"})
+        return JsonResponse(
+            {"userName": username, "error": "Already Registered"}
+        )
     except User.DoesNotExist:
         logger.debug(f"{username} is a new user")
         user = User.objects.create_user(
@@ -64,17 +72,20 @@ def registration(request):
             email=email
         )
         login(request, user)
-        return JsonResponse({"userName": username, "status": "Authenticated"})
+        return JsonResponse(
+            {"userName": username, "status": "Authenticated"}
+        )
+
 
 # # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
-# def get_dealerships(request):
-# ...
-#Update the `get_dealerships` render list of dealerships all by default, particular state if state is passed
 def get_dealerships(request, state="All"):
-    endpoint = "/fetchDealers" if state == "All" else f"/fetchDealers/{state}"
+    endpoint = "/fetchDealers" 
+    if state == "All" 
+    else f"/fetchDealers/{state}"
     dealerships = get_request(endpoint)
     return JsonResponse({"status": 200, "dealers": dealerships})
+
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 # def get_dealer_reviews(request,dealer_id):
@@ -89,6 +100,7 @@ def get_dealer_reviews(request, dealer_id):
         return JsonResponse({"status": 200, "reviews": reviews})
     return JsonResponse({"status": 400, "message": "Bad Request"})
 
+
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
 # ...
@@ -98,6 +110,7 @@ def get_dealer_details(request, dealer_id):
         dealership = get_request(endpoint)
         return JsonResponse({"status": 200, "dealer": dealership})
     return JsonResponse({"status": 400, "message": "Bad Request"})
+
 
 # Create a `add_review` view to submit a review
 # def add_review(request):
