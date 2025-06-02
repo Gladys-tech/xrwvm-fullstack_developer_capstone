@@ -31,7 +31,7 @@ urlpatterns = [
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('dealers/', TemplateView.as_view(template_name="index.html")),
     path('get_dealers/', get_dealerships, name='get_dealers'),
-     path(
+    path(
         'dealer/<int:dealer_id>',
         TemplateView.as_view(template_name="index.html")),
     path(
